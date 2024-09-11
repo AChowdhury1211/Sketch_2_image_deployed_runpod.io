@@ -12,7 +12,7 @@ async function generateImage() {
             accept: "application/json",
             "content-type": "application/json",
             // Replace with your actual API key
-            authorization: "Bearer SWMB2SJN9C3RXZF31M6HOA6DN1AXHVA9KK4I04Q0",
+            authorization: "Bearer",
         },
         body: JSON.stringify({
             input: {
