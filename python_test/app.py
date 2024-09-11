@@ -5,7 +5,7 @@ from io import BytesIO
 
 app = Flask(__name__)
 
-# Replace this with your actual Runpod API key
+# Replace  Runpod API key
 API_KEY = ""
 RUNPOD_API_URL = "https://api.runpod.ai/v2/y0w7gzrcq90ju5/runsync"
 
@@ -25,7 +25,7 @@ def generate_image():
         if not prompt or not image_url or not model_name:
             return jsonify({"error": "Missing required fields"}), 400
 
-        # Fetch the image from the provided URL
+        # Fetching image
         response = requests.get(image_url)
         if response.status_code != 200:
             return jsonify({"error": "Failed to fetch the image."}), 400
@@ -33,7 +33,6 @@ def generate_image():
         # Convert image to Base64
         image_data = base64.b64encode(response.content).decode("utf-8")
 
-        # Prepare the payload for Runpod API
         payload = {
             "input": {
                 "prompt": prompt,
@@ -54,7 +53,6 @@ def generate_image():
             "authorization": f"Bearer {API_KEY}",
         }
 
-        # Make the API request
         api_response = requests.post(RUNPOD_API_URL, json=payload, headers=headers)
 
         if api_response.status_code != 200:
@@ -63,7 +61,7 @@ def generate_image():
         data = api_response.json()
         print(f"data: {data}")
         if "output" in data:
-            # Decode the output image from base64
+            # Decode the output  from base64
             generated_image_base64 = data["output"]
             return jsonify({"image_base64": generated_image_base64})
 
