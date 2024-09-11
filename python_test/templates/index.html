@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Image Generation</title>
+    <script>
+        async function generateImage() {
+            const formData = new FormData(document.getElementById("imageForm"));
+
+            try {
+                const response = await fetch("/generate_image", {
+                    method: "POST",
+                    body: formData,
+                });
+                
+                console.log("response" , response);
+                const data = await response.json();
+                console.log("data" , data);
+
+                if (data.error) {
+                    alert(`Error: ${data.error}`);
+                } else {
+                    const generatedImageUrl = `data:image/png;base64,${data.image_base64}`;
+                    document.getElementById("imageResult").innerHTML =
+                        `<img src="${generatedImageUrl}" alt="Generated Image" />`;
+                }
+            } catch (error) {
+                alert(`Error: ${error.message}`);
+            }
+        }
+    </script>
+</head>
+
+<body>
+    <h1>Generate Image</h1>
+    <form id="imageForm" onsubmit="event.preventDefault(); generateImage();">
+        <label for="promptInput">Prompt:</label>
+        <input type="text" id="promptInput" name="prompt" required><br><br>
+
+        <label for="imageUrlInput">Image URL:</label>
+        <input type="text" id="imageUrlInput" name="imageUrl" required><br><br>
+
+        <label for="modelnameInput">Model Name:</label>
+        <input type="text" id="modelnameInput" name="modelName" required><br><br>
+
+        <button type="submit">Generate Image</button>
+    </form>
+
+    <div id="imageResult"></div>
+</body>
+
+</html>

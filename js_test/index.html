@@ -1,0 +1,47 @@
+< !DOCTYPE html >
+    <html lang="en">
+        <head>
+            <meta charset="UTF-8">
+                <meta name="viewport" content="width=device-width, initial-scale=1.0">
+                    <title>Image to Base64</title>
+                </head>
+                <body>
+                    <h1>Convert Image to Base64</h1>
+                    <script>
+                        async function convertImageToBase64() {
+            const imageUrl = "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT-aO6gNOqz5lDIiSgdQM7NVNS3URYIICgmog&s";
+                        try {
+                const response = await fetch(imageUrl);
+                        if (!response.ok) {
+                    throw new Error(`Network response was not ok: ${response.statusText}`);
+                }
+
+                        // Convert response to Blob
+                        const blob = await response.blob();
+                        const reader = new FileReader();
+
+                // Use Promise to handle async file read
+                const base64Data = await new Promise((resolve, reject) => {
+                            reader.onloadend = () => {
+                                try {
+                                    const base64String = reader.result.split(',')[1]; // Extract Base64
+                                    resolve(base64String);
+                                } catch (err) {
+                                    reject(new Error("Error while converting image to Base64."));
+                                }
+                            };
+                    reader.onerror = () => reject(new Error("Error reading image Blob."));
+                        reader.readAsDataURL(blob);
+                });
+
+                        console.log("Base64 Data:", base64Data);
+            } catch (err) {
+                            console.error("Error:", err.message);
+            }
+        }
+
+                        // Call the function
+                        convertImageToBase64();
+                    </script>
+                </body>
+            </html>
