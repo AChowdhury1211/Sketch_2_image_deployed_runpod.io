@@ -4,9 +4,9 @@ import base64
 
 app = Flask(__name__)
 
-# Replace with your actual RunPod API Endpoint and Authorization Token
+
 RUNPOD_API_URL = "https://api.runpod.ai/v2/dfasfsadf/runsync"
-API_KEY = ""  # Add your actual Bearer token
+API_KEY = ""
 
 
 @app.route("/")
